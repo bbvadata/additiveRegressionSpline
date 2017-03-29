@@ -6,6 +6,6 @@ Main documents are
 
 2. [The C++ code through Rcpp](https://github.com/bbvadata/additiveRegressionSpline/blob/master/src/gam.cpp)
 
-2. [The R code provided [1]](https://github.com/bbvadata/additiveRegressionSpline/blob/master/src/gam.cpp)
+2. [The R code provided [1]](https://github.com/bbvadata/additiveRegressionSpline/blob/master/R/gam.R)
 
 [1] [Generalized Additive Models: An Introduction with R](https://www.crcpress.com/Generalized-Additive-Models-An-Introduction-with-R/Wood/p/book/9781584884743)
