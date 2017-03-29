@@ -1,0 +1,3 @@
+useDynLib(additiveRegressionSpline)
+exportPattern("^[[:alpha:]]+")
+importFrom(Rcpp, evalCpp)

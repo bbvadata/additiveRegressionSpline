@@ -1,0 +1,8 @@
+base
+data.table
+ggplot2
+gridExtra
+microbenchmark
+nlme
+mgcv
+additiveRegressionSpline
