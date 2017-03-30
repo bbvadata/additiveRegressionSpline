@@ -194,6 +194,8 @@ Since GCV has computational adventages over OCV, the next formula can be propose
 
 $$\mathcal{V}_g = \frac{n \sum_{i=1}^{n}(y_i - \hat{f}_i)^2}{ [tr(\textbf{I} - \textbf{A})]^2 }$$
 
+where $\hat{f}_i$ is the estimate from fitting to all the data, and $\textbf{A}$ is the corresponding influence matrix.
+
 ```{r, cache=TRUE, fig.height=3, fig.width=5, fig.align='center'}
 # Fit simple models again
 knots = seq(from=0.0,to=1,by=0.3)
