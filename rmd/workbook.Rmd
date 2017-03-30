@@ -190,6 +190,10 @@ ggplot(aes(x=x, y=wear), data=data.frame(x,wear)) +
 
 ## GCV - General Cross Validation
 
+Since GCV has computational adventages over OCV, the next formula can be proposed to compute GVC:
+
+$$\mathcal{V}_g = \frac{n \sum_{i=1}^{n}(y_i - \hat{f}_i)^2}{ [tr(\textbf{I} - \textbf{A})]^2 }$$
+
 ```{r, cache=TRUE, fig.height=3, fig.width=5, fig.align='center'}
 # Fit simple models again
 knots = seq(from=0.0,to=1,by=0.3)
@@ -571,7 +575,7 @@ List splineModelPenalized(arma::vec y, NumericVector x, NumericVector knots, dou
   } catch(...) {
     ::Rf_error("Solve can not find a solution for the system."); 
   }
-  // General Crodd Validation (GCV)) calculation
+  // General Cross Validation (GCV)) calculation
   arma::vec influence = hatMatrix(mSA, x.length());
   // Fitted values
   arma::vec fitted = mSA * betas;
