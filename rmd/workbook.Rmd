@@ -102,8 +102,8 @@ ggplot(aes(x=x, y=wear), data=data.frame(x,wear)) +
 
 ```{r, cache=TRUE, fig.height=3, fig.width=5, fig.align='center'}
 knots = seq(from=0.0,to=1,by=0.00001) # A lot of 
-m <- microbenchmark(m1<-spl.X(x, knots), m2<-cubicSpline(x, knots), times=10)
-autoplot(m, log=F)
+m <- microbenchmark(m1<-spl.X(x, knots), m2<-cubicSpline(x, knots), times=30)
+autoplot(m, log=F) + scale_x_discrete(labels=c("R","C++")) + xlab("Technique")
 all(m1==m2)
 ```
 
@@ -117,8 +117,8 @@ splineModelInR <- function(x,wear,knots){
 }
 m <- microbenchmark(splineModelInR(x, wear,knots), 
                     mod.2 <- splineModel(x, knots, as.matrix(wear)), 
-                    times=10)
-autoplot(m, log=F)
+                    times=30)
+autoplot(m, log=F) + scale_x_discrete(labels=c("R","C++")) + xlab("Technique")
 ```
 
 ## Univariate spline regression with penalization
@@ -199,8 +199,12 @@ where $\hat{f}_i$ is the estimate from fitting to all the data, and $\textbf{A}$
 ```{r, cache=TRUE, fig.height=3, fig.width=5, fig.align='center'}
 # Fit simple models again
 knots = seq(from=0.0,to=1,by=0.3)
-system.time(mod.1 <- prs.fit(wear, x, knots, lambda = 0.0001))
-system.time(mod.2 <- splineModelPenalized(wear, x, knots, lambda = 0.0001))
+m <- microbenchmark(mod.1 <- prs.fit(wear, x, knots, lambda = 0.0001), 
+                    mod.2 <- splineModelPenalized(wear, x, knots, lambda = 0.0001), 
+                    times=30)
+m
+autoplot(m, log=F) + scale_x_discrete(labels=c("R","C++")) + xlab("Technique")
+
 # Check if C function is working well
 all(trunc(hatMatrix(mod.2$modelatrix, dim(mod.2$modelatrix)[1]), prec = 5) 
     == trunc(hatvalues(mod.1), prec = 5))
@@ -384,14 +388,15 @@ zk <- as.numeric(quantile(unique(z),1:(q-2)/(q-1)))
 
 # Get matrix (only one calculation is required)
 m1 <- microbenchmark(modR<-am.setup(x,z,q), splineModelPMatrix(x,z,xk,zk), times=30)
-autoplot(m1, log=F)
+autoplot(m1, log=F) + scale_x_discrete(labels=c("R","C++")) + xlab("Technique")
 
+m <- matrices
 # Fit models
 m2 <- microbenchmark(fit.am(y,modR$X,modR$S,sp), 
-                    splineModelPMatrixFit(y,x,matrices$modelMatrix,matrices$sX,
-                                 matrices$sZ,lambda_x=sp[1],lambda_z=sp[2])
+                    splineModelPMatrixFit(y,x,m$modelMatrix,m$sX,
+                                 m$sZ,sp[1],sp[2])
                     , times=30)
-boxplot(m2)
+autoplot(m2, log=F) + scale_x_discrete(labels=c("R","C++")) + xlab("Technique")
 ```
 
 Fit bivariate model GCV
